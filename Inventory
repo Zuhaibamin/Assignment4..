@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+
+struct Product {
+    int id;
+    std::string name;
+    double price;
+};
+
+class InventoryManager {
+private:
+    std::vector<Product> inventory;
+
+public:
+
+    void addProduct(const Product& newProduct) {
+        inventory.push_back(newProduct);
+    }
+
+
+    void removeProduct(int productId) {
+        auto it = std::remove_if(inventory.begin(), inventory.end(),
+            [productId](const Product& p) { return p.id == productId; });
+
+        inventory.erase(it, inventory.end());
+    }
+
+
+    void displayInventory() const {
+        std::cout << "Current Inventory:\n";
+        for (const auto& product : inventory) {
+            std::cout << "ID: " << product.id << ", Name: " << product.name << ", Price: " << product.price << "\n";
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    InventoryManager inventoryManager;
+
+
+    Product product1 = { 1, "Laptop", 1200.50 };
+    Product product2 = { 2, "Smartphone", 699.99 };
+
+    inventoryManager.addProduct(product1);
+    inventoryManager.addProduct(product2);
+
+
+    inventoryManager.displayInventory();
+
+
+    inventoryManager.removeProduct(1);
+
+
+    inventoryManager.displayInventory();
+
+    return 0;
