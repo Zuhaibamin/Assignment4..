@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <chrono>
+#include <cstdlib>
+
+int main() {
+    const int size = 100000;
+    std::vector<int> numbers(size);
+
+    // Initialize the vector with random values in descending order
+    for (int i = 0; i < size; ++i) {
+        numbers[i] = size - i;
+    }
+
+    // Measure the execution time of Bubble Sort
+    auto startTimeBubbleSort = std::chrono::high_resolution_clock::now();
+    std::sort(numbers.begin(), numbers.end());
+    auto endTimeBubbleSort = std::chrono::high_resolution_clock::now();
+    auto durationBubbleSort = std::chrono::duration_cast<std::chrono::microseconds>(endTimeBubbleSort - startTimeBubbleSort);
+
+    // Print execution time for Bubble Sort
+    std::cout << "Bubble Sort Execution Time: " << durationBubbleSort.count() << " microseconds\n";
+
+    // Print first 10 and last 10 integers
+    std::cout << "First 10 integers: ";
+    for (int i = 0; i < 10; ++i) {
+        std::cout << numbers[i] << " ";
+    }
+    std::cout << "\nLast 10 integers: ";
+    for (int i = size - 10; i < size; ++i) {
+        std::cout << numbers[i] << " ";
+    }
+    std::cout << "\n";
+
+    // Measure the execution time of STL sort
+    auto startTimeSTLSort = std::chrono::high_resolution_clock::now();
+    std::sort(numbers.begin(), numbers.end());
+    auto endTimeSTLSort = std::chrono::high_resolution_clock::now();
+    auto durationSTLSort = std::chrono::duration_cast<std::chrono::microseconds>(endTimeSTLSort - startTimeSTLSort);
+
+    // Print execution time for STL sort
+    std::cout << "STL Sort Execution Time: " << durationSTLSort.count() << " microseconds\n";
+
+    return 0;
+}
